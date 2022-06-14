@@ -177,4 +177,4 @@ function App() {
 export default App;
 
 
-// to do when its 0 or any negative number, if you press the operation button twice it just empties
+// to do when its 1.0 make the 0 disapear
