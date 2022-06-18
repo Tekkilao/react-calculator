@@ -122,6 +122,7 @@ function evaluate({ currentOperand, previousOperand, operation}) {
     case "÷": 
       computation = prev / current;
       break
+      default: 
   }
   
   return computation.toString()
@@ -135,12 +136,18 @@ function formatOperand(operand){
   if (operand == null) return
 
   const [integer, decimal] = operand.split('.')
-
+ 
   if (decimal == null) return INTEGER_FORMATTER.format(integer);
-  
+
   return `${INTEGER_FORMATTER.format(integer)}.${decimal}`
 }
 
+function checkDecimal(operand) {
+  if (operand == null) return
+  const [integer, decimal] = operand.split('.')
+  if (decimal == 0 || decimal == null) return integer
+  return operand
+}
 
 function App() {
   const [{ currentOperand, previousOperand, operation }, dispatch] = useReducer(reducer, {});
@@ -149,7 +156,7 @@ function App() {
   return (
     <div className="calculator-grid">
       <div className="output">
-        <div className="previous-operand">{formatOperand(previousOperand)} {operation}</div> 
+        <div className="previous-operand">{checkDecimal(previousOperand)} {operation}</div> 
         <div className="current-operand">{formatOperand(currentOperand)}</div>        
       </div>
       <button className="span-two" onClick={() => dispatch({ type: ACTIONS.CLEAR })}>AC</button> 
@@ -175,6 +182,3 @@ function App() {
 }
 
 export default App;
-
-
-// to do when its 1.0 make the 0 disapear
